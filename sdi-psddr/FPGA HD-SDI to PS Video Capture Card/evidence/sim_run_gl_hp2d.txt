@@ -1,0 +1,26 @@
+﻿=== 1/3 synthesise + export funcsim netlist ===
+=== 2/3 compile primitives + glbl + netlist + testbench ===
+  unisim sources: 245
+=== 3/3 elaborate and run ===
+
+--- gate-level result ---
+  MAX_OUT=8 AW_LAT=1 W_LAT=1 B_LAT=32 PX_DUTY=100 PX_MHZ=74 RST_MID=0
+  throughput =   150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30)
+  beat rate  =  0.189 beats/cycle (1.000 = 800 MB/s)
+  beats=37728 wlast=2358 aw=2312 beats_written=37728 inflight=0
+  frame_cnt=140 marker_beats=0 frame_start_addr=100495e8
+  CHECK data=PASS marker=n/a (gate: marker check is behavioural-only) frames=n/a (gate) axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+  (data beats=37728 errors=0 | marker=0 errors=0 | axi errors=0 | ring errors=0)
+  (ovf: drop_seen=0 err0_seen=0 -- a drop must show up as err_stat[0])
+  (drain: idle=1 inflight=0 fifo_left=9 words cycles_to_drain=0 quiet beats=0)
+
+--- memory inference ---
+  
+  | Slice LUTs*             |  311 |     0 |     78600 |  0.40 |
+  | Slice Registers         |  302 |     0 |    157200 |  0.19 |
+  | Block RAM Tile |    0 |     0 |       265 |  0.00 |
+  * Note: Each Block RAM Tile only has one FIFO logic available and therefore can accommodate only one FIFO36E1 or one FIFO18E1. However, if a FIFO18E1 occupies a Block RAM Tile, that tile can still accommodate a RAMB18E1
+
+Reference: run_bench.ps1 -Only B_LAT_32 (same bench.txt, behavioural RTL):
+  150.91 MB/s, beats=37728, frame_cnt=140, err_stat=0x0, all checks PASS
+Gate level must match. A mismatch means the netlist differs from the RTL.

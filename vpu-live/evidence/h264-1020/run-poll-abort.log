@@ -1,0 +1,18 @@
+packager src=/dev/shm/wcis-vpu-vtc-ad73ba3278e7468db61eff4247ad125b www=/dev/shm/wcis-vpu-vtc-ad73ba3278e7468db61eff4247ad125b/www fps=30 keep=6 pid=7344 unix=1792469367
+[2026-10-20 04:09:27.565] [info] Device initialization successful, version information:
+[2026-10-20 04:09:27.565] [info] 	icore: FMSHZGV3TECH-AID - 24160628
+[2026-10-20 04:09:27.565] [info] 	device: 25122301
+[2026-10-20 04:09:27.565] [info] Device Protocol: axi
+[2026-10-20 04:09:27.565] [info] Device Name: zg330aiu
+[2026-10-20 04:09:27.565] [info] Device Parameters: 
+[2026-10-20 04:09:27.565] [info] 	dma: 0x80000000
+[2026-10-20 04:09:27.565] [info] 	npu: 0x40000000
+[2026-10-20 04:09:27.567] [info] Hard Resize PS, x0=0, y0=0, x1=1919, y1=1079, stride x=2, stride y=2, resize channel=2
+[2026-10-20 04:09:27.567] [info] Hard Resize PL, x0=0, y0=12, x1=1919, y1=1067, stride x=3, stride y=3
+Format: type=10, format=842094158, width=960, height=540, nplanes=2, bytesperline=[960, 960, 0], sizeimage=[518400, 259200, 0], interlaced:1
+Format: type=1, format=875967048, width=960, height=540, sizeimage=5242880, bytesperline=0, interlaced:1
+[VPU] Allocate intput buffer for vpu, buffer numbers=6
+[VPU] Allocate output buffer for vpu, buffer numbers=6
+[VPU] setEncFrameRate=30fps
+[VPU Exception] in File:D:/yzd/tmp/wcis-camera-preview-vpulive-7f92df53/ps_app/vendor/include/pipeline/vpu/vpu.h  Line: 1001 
+ Failed to dequeue input buffer, errno=5

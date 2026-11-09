@@ -1,0 +1,12 @@
+{
+  "source": "vtc",
+  "session": "0999088133e646b8a0eb08eb50e9c860",
+  "boot_id": "5e10dfdf-2905-4778-975f-cd7b0fe821d2",
+  "pid": 8077,
+  "directory": "/dev/shm/wcis-vpu-vtc-0999088133e646b8a0eb08eb50e9c860",
+  "codec": "h264",
+  "size": "960x540",
+  "packager_pid": 8078,
+  "exit_code": 0,
+  "packager_exit": -15
+}

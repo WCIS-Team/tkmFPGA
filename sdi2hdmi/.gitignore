@@ -1,0 +1,53 @@
+# sdi2hdmi（SDI→HDMI 转换器）工程 .gitignore
+# 口径沿用 WCIS 归档根仓库（D-55）：体积类与工具产物挡回，源码/文档/脚本/报告入库。
+# 单件需要入库时用 `git add -f <路径>`。被挡回的文件仍留在盘上，只是不入库。
+
+# 体积类：位流 / 检查点 / 归档包 / 模型
+*.bit
+*.bin
+*.img
+*.elf
+*.dcp
+*.pb
+*.tar
+*.tar.xz
+*.tar.gz
+*.tgz
+*.zip
+*.gz
+*.rar
+*.7z
+*.onnx
+*.onnx.data
+*.whl
+*.pt
+
+# 构建与仿真产物目录
+.Xil/
+.build/
+xsim.dir/
+
+# Vivado / xsim 机器日志、自动备份与临时件
+*.jou
+webtalk*
+usage_statistics_webtalk.*
+vivado*.log
+vlog*.log
+vout*.txt
+xelab.*
+xelab_*.txt
+xsim*.log
+xvlog.*
+xvlog_*.txt
+*.backup.log
+*.backup.jou
+COMPILE
+build_alignfix.txt
+
+# 根目录历轮运行日志（留在盘上，不入库）
+sim_*.txt
+sim_run.txt.err
+
+# 杂项
+Thumbs.db
+Desktop.ini

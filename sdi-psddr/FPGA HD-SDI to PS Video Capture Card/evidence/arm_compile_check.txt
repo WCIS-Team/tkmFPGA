@@ -1,0 +1,15 @@
+ARM driver syntax check - re-run for the record
+generated: 2026-10-16 00:40:59 +0800
+command: wsl.exe -d Ubuntu -e sh /mnt/s/apps/llm/agentwork/sdi-cap/ps/check_compile.sh
+note: x86-64 host gcc, syntax/warning level only; no aarch64 toolchain here.
+
+=== compiler ===
+gcc (Ubuntu 15.2.0-16ubuntu1) 15.2.0
+
+=== sdi_cap.h as a translation unit ===
+  ok
+
+=== sdi_cap.c ===
+  ok
+
+ALL CLEAN

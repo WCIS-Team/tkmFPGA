@@ -1,0 +1,298 @@
+# 出库规则（口径源自 D-55 归档根建仓，那个根当时名 `ouroriginalrepo`、10-18 起名 `workenv`；本库 10-18 改成子模块 `repos` 后沿用同一套 D-21/D-23 凭据硬闸＋D-37/D-38 体积类）
+# 放行类不在这里写——*.xls/*.xlsx/*.pdf 已按 D-37/D-38 放行，位流/镜像/压缩包按下面体积类挡回。
+
+ha-small/
+
+# ---- 2026-11-09：HA4FPAI 从 repos 子模块退为本地忽略（她裁：整理完、推完后冻结，从此不动）----
+# 原为 gitlink 子模块（WCIS-Team/HA4FPAI）；现保留本地目录但不随 repos 跟踪，指针历史仍在旧提交里。
+HA4FPAI/
+
+# ---- 体积类：位流、磁盘镜像、压缩包、Procise 检查点 ----
+# 需要单件进库时用 `git add -f <路径>` 放行（D-38 那条口径）
+*.bit
+*.bin
+*.img
+*.elf
+*.dcp
+*.pb
+*.tar
+*.tar.xz
+*.tar.gz
+*.tgz
+*.zip
+*.gz
+*.rar
+*.7z
+
+# ---- 板端模型与轮子（体积类，正本在 wcis-models 与板上）----
+# 2026-10-18 D-62: *.raw blocks the ~1.6 GB Q3I-decoder_ZG.raw board artifact;
+# *.safetensors blocks any weight snapshot pulled into a deliverable dir.
+*.onnx
+*.whl
+*.pt
+*.onnx.data
+*.raw
+*.safetensors
+
+# ---- Procise / Vivado 构建产物目录 ----
+*.runs/
+*.cache/
+*.hw/
+*.ip_user_files/
+*.sim/
+*.gen/
+*.gen.bkp/
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+
+# ---- Python 虚拟环境：平台相关二进制 + pyvenv.cfg 硬编码绝对路径，换机器必废（2026-10-29）----
+# D-63: funasr/venv 2.2 GB / 51613 件，全是 .dll/.pyd/.exe 与 site-packages，
+# 入库只会把 2 GB 二进制灌进历史，且任何一次重建都会让整棵树全变。
+# 正本不入库，本机按 funasr/runtime/python311 重新生效：改 venv/pyvenv.cfg 的
+# home / executable / command 三行为本机绝对路径即可（原件留 venv/pyvenv.cfg.orig）。
+venv/
+.venv/
+virtualenv/
+
+# ---- 便携/嵌入式 Python 发行版：同上，厂商预编译二进制正本，按 D-38 体积类挡回（2026-10-29）----
+# 判据：目录里带 python.exe / bin/python3.x 的整份运行时（如 funasr/runtime/python311，
+# 3375 件 / 约 60 MB，含 python311.dll、tcl86t.dll、sqlite3.dll 等）。
+# 与 venv 的关系：venv 的 pyvenv.cfg 靠它当 home，两者都不入库，本机要跑就自己装
+# 对应版本 Python 再改 pyvenv.cfg，或直接 python -m venv 重建。
+# 需要单件进库时用 `git add -f <路径>` 放行（D-38 那条口径）。
+# 2026-11-02 改窄：原来的 `runtime/` 会连着厂商 OpenCV 头文件目录
+# `deps/thirdparty/include/opencv2/core/opencl/runtime/`（15 件 .hpp）一起挡掉。
+# 本意只指可移植 Python 运行时，故具名到 funasr 那一条链路。
+# 2026-11-04：`funasr/` 目录改名 `asr_chain/`，规则跟着改（否则运行时会被当新文件加进来）。
+# 2026-11-04（二）：`asr_chain/` 再改名 `asr/`，新路径补一条；旧两条照旧留下。
+asr_chain/runtime/
+asr/runtime/
+funasr/runtime/
+python3*/
+python-3*/
+Python-3*/
+*embeddable*/
+*portable-python*/
+
+# ---- 2026-11-02：funasr 的模型缓存目录挡回（D-38 体积类）----
+# funasr/funasr/models/ 是 modelscope snapshot_download 的缓存（901 MB，其中
+# iic--SenseVoiceSmall/snapshots/master/model.pt 一颗 936 MB），
+# 正本用同目录 download_models.py 重新拉（modelscope hub，脚本里带 snapshot_download）。
+# 缓存里剩下的 27 件小文件（tokenizer bpe、tokens.json、示例 wav/mp3、说明图）
+# 也一并挡：它们是模型仓库的附属件，跟着 901 MB 的权重一起属于"下载物"。
+# 2026-11-04：目录改名 `asr_chain/`，新旧两条都留（旧条对历史提交仍有效）。
+# 2026-11-04（二）：`asr_chain/` 再改名 `asr/`，新路径补一条（旧两条照旧留下）。
+asr_chain/funasr/models/
+asr/funasr/models/
+funasr/funasr/models/
+
+# ---- 凭据载体：永不进库（D-23 硬闸，同 wiki 库那份）----
+**/10_etc.tar.gz
+**/11_root_home_vendor.tar.gz
+**/53_rc_local_and_login.txt
+board-ssh.py
+
+# ---- 杂项 ----
+*.log.bak
+Thumbs.db
+Desktop.ini
+# ---- 2026-10-18 出库口径（体积类，同 wiki 库 D-38）----
+# OpenCV/FFmpeg 预编译二进制共 1.14 GB / 88 件，其中 3 件 >100 MiB，
+# GitHub 对单文件 >100 MiB 直接拒绝推送，正本可从厂商 iCraft SDK 取回。
+*.lib
+*.a
+*.o
+
+# ---- 2026-10-18：sdi2hdmi 的嵌套 .git 已挪到备份目录、按普通目录摊平入库 ----
+# 它自带的 sdi2hdmi/.gitignore 继续生效（*.bit 位流与 Vivado/xsim 产物仍挡在外面）
+
+# ---- 2026-10-30：Nuscenes v1.0-mini 子集整棵不入库（数据集本体，D-38 体积类）----
+# 5.46 GB / 31,238 件，是 official 里最大的一块（占一半以上）：
+#   sweeps 4.39 GB 点云 26,358 件（.bin 已被上面体积类挡住，不重复挡）
+#   samples 694 MB 相机图 4,848 件（.jpg）
+#   maps 456 MB 地图 13 件（.png，单张最大 143 MiB，超 GitHub 100 MiB 硬限）
+#   v1.0-mini 31 MB 标注元数据 13 件（.json）
+# 上面的体积类只挡了 .bin/.raw，挡不住 .jpg/.png/.json/.pcd，故按目录整棵挡回。
+# 数据集正本从 Nuscenes 官方或内网数据盘取回；需要单件进库时用 `git add -f <路径>` 放行。
+Nuscenes_v1.0-mini_subset/
+
+# ---- 2026-11-02：official 里的编译产物与预编译二进制整批挡回（D-38 体积类）----
+# 上面 *.a/*.lib/*.o 已经挡了静态库，这组补动态库、扩展模块与可执行件。
+# 判据＝"编译出来的、能从 SDK 或重新编译取回"。
+# 注意：已在库里的老件不受影响（ignore 只管未跟踪件），但从 2026-11-02 这次
+# 搬动起，这类件在新路径不再进库＝库里比盘上少这些件。
+*.so
+*.so.*
+*.dll
+*.pyd
+*.obj
+*.exe
+
+# ---- 2026-11-02：编译产物整批挡回——判据是"有源件就能重编"（她当次裁的口径）----
+# 上一次判"不挡 *.ftmp"的理由（源件 *.onnx 已挡）查错了：真正的源件是 .pt 与 TOML，
+# 都在盘上、都在同一个示例目录里，README 也写了重编命令，所以 ftmp 属于可再生件。
+# - *.ftmp（32 件 / 96.00 MiB）：fpai_reference_design 的 TarDAL 示例
+#   model_compile/TarDAL/2_compile/qtset/tardal_dt/（ir_00..15 ＋ vi_00..15，每颗 3 MiB）。
+#   源件＝同目录 2_compile/fmodel/tardal-dt.pt（1.24 MB，另有 yolov5s_352x640.pt 29.19 MB）
+#   ＋ config/BY/tardal-dt_8.toml；README 第 68~84 行给了 `icraft compile config/BY/*.toml`
+#   的重编步骤 ⇒ 可再生，挡。
+# - *.snapshot（1 件 / 8.57 MiB）：demo_for_icraft_by/Example2_quick_start_python/snapshot_demo/
+#   yolov5s_hard.snapshot，是 iCraft 编译出的模型快照。源件＝同目录 imodel/yolov5s_hard/
+#   下的 .raw 与 .json（盘上在，库里按 *.raw 规则没入）＋ 示例自带的 preprocess.py 等脚本
+#   ⇒ 可再生，挡。
+*.ftmp
+*.snapshot
+
+# ---- 2026-11-02：模型权重与推理产物整批挡回 ----
+# - *.pth（ResNet18.pth 42.72 MiB）：同目录有 train.py ＋ model.py，能重训；
+#   另有 *.onnx（已被上面体积类挡）与 *.torchscript（torch.jit 导出，可从 .pth 重导）。
+# - *.torchscript（ResNet18_224x224.torchscript 42.80 MiB）：torch.jit 导出件。
+# - *.deb：official/demo/.../icraft_deb/Icraft_3.33.1_onchip.deb（9.11 MiB），
+#   板端 Runtime 安装包，正本在厂商 SDK 下载页。
+*.pth
+*.torchscript
+*.deb
+
+# ---- 2026-11-02：FPGA 综合产物挡回（源件都在，可重新综合）----
+# - *.edif（13 件 / 226.66 MiB）：EDIF 网表，Vivado 综合产物。同目录有 RTL 源码
+#   （AI_Mate_stub.v 23 KB、ai7030_edif_top.v、sdi/、display/、gp/、ip/ 全套），
+#   能重跑综合生成 ⇒ 可再生，挡。
+#   注：AI_Mate.edif 在 official/demo/... 与 FPAI30TAI图像FPGA/case/... 两处各一份，
+#   md5 相同（28174d8040c5360c123a01ed97330963），内容一样，挡两处不损失信息。
+# - *.vhd 里 Vivado 加密 IP 交付件（33 件 / 134.03 MiB）：文件头是
+#   "`protect encrypt_agent = \"XILINX\""，是 IP 生成/交付件，不是源码。
+*.edif
+*.edf
+**/hdl/blk_mem_gen_*.vhd
+**/hdl/*_sim_netlist.vhd
+# Vivado 2018.3 生成的 IP 仿真网表（文件头带 "Tool Version: Vivado v.2018.3"）：
+# 全库 64 件 / 25.28 MiB，同目录都有 .xci（IP 配置）与 _stub.v，可重新生成。
+*_sim_netlist.v
+*_sim_netlist.vhdl
+# 厂商 IP patch 的打包件（二进制，头部 XlxV60EB），4 件 / 29.63 MiB。
+*.padr
+
+# ---- 2026-11-02：可执行件（ELF/引导链）与综合产物挡回，源件都在可重编 ----
+# - official/demo/Icraft-ModelZoo-yolov5/fpai_demo_app/examples/.../PLin+SingleNet+HDMI/
+#   下的 sdicamera+yolov5+hdmi（4.80 MiB）与 adder_demo：源件是同目录 src/*.cpp ＋ CMakeLists.txt。
+# - official/demo/Icraft-ModelZoo-yolov5/BOOT_Gen/ 下 u-boot（6.28 MiB）、bl31.elf、
+#   FSBL251210_ddr400_demo.out：厂商引导链，正本在厂商 SDK（同目录的 *.bit 已按体积类挡回）。
+# - vpu-live/bin/ 下三颗 ELF（live_sim、vpu_jpg、wcis_sdi_vpu_live 5.13 MiB）：
+#   源码与构建脚本在 vpu-live/（60 件，含 build/build-live.sh），可重编。
+#   注意 vpu-live/evidence/ 是我方实测证据（截图/日志/receipt），那是"复现结果"，要留。
+official/demo/Icraft-ModelZoo-yolov5/BOOT_Gen/u-boot
+official/demo/Icraft-ModelZoo-yolov5/BOOT_Gen/bl31.elf
+official/demo/Icraft-ModelZoo-yolov5/BOOT_Gen/FSBL251210_ddr400_demo.out
+official/demo/Icraft-ModelZoo-yolov5/fpai_demo_app/examples/1_single_input+ai/PLin+SingleNet+HDMI/sdicamera+yolov5+hdmi
+official/demo/Icraft-ModelZoo-yolov5/fpai_demo_app/examples/1_single_input+ai/PLin+SingleNet+HDMI/adder_demo
+vpu-live/bin/
+
+# ---- 2026-11-02：公开数据集本体挡回 ----
+# official/demo/03_图像分类部署示例工程 image_cls_resnet18/data/ 共 3670 件 / 221.68 MiB，
+# 是公开花卉数据集（daisy/dandelion/roses/sunflowers/tulips 的 train/val 分片）；
+# 同目录 train.py 只是从 ./data 读，README 侧也没给下载脚本，挡了不影响训练脚本本身。
+official/demo/03_图像分类部署示例工程 image_cls_resnet18/data/
+
+# ---- 2026-11-02：示例的 io/ 数据目录整棵挡回（她当次裁的口径）----
+# io/ 下只有 input / golden / output / coco 四类数据，没有别的；一律不入库。
+# 挡回合计：input 441 件 + golden 210 件 + output 12 件 + coco 2 件 ＝ 665 件 / 约 232 MiB。
+# 注意**不要连 `deps/**/include/pipeline/io/**` 一起挡**：那是 modelzoo_utils 的 23 个头文件
+# （input_source.hpp / hdmi_display.hpp / stream2rtmp.hpp 等），是源码，不是数据。
+official/**/io/input/
+official/**/io/golden/
+official/**/io/output/
+official/**/io/coco/
+# io 根下的清单文件也属数据侧（内容是图片文件名清单，如 000000000139.jpg），
+# 它们指向的图已挡，单独留着就是悬空引用。*.txt 这条只针对 io/ 根，不影响别处的清单。
+official/**/io/list.txt
+official/**/io/coco.txt
+official/**/io/test.txt
+
+# ---- 2026-11-02：official 里"最小可复现"以外的零碎件挡回 ----
+# 判据＝"跑示例/复现结果用不上、或者是别人机器上的残留"。
+# 1) Excel 打开时写的锁文件：官方 benchmark 结果表里 105 件 `~$xxx.xlsx`，是并发编辑残留。
+official/benchmark/**/~$*.xlsx
+# 2) 预编译好的可执行件：DebugDemos/vpu_test 下 mvx_encoder / mvx_decoder 两颗 ELF
+#    （各 0.16 MiB），源码就在同目录，能重编。
+official/fpai_reference_design/examples/0_datapath/DebugDemos/vpu_test/mvx_encoder
+official/fpai_reference_design/examples/0_datapath/DebugDemos/vpu_test/mvx_decoder
+
+# 下面这些**不挡**，理由逐条写清，免得下轮又当成"体积类"误挡：
+# - `imodel/**/*.json`（31.71 MiB）：网络层结构与量化参数，是部署要读的配置，不是构建产物
+#   （同目录的 .raw 是编译产物，已按 *.raw 挡回）。
+# - 各 tutorial 里的 docs/images、*.md、*.pdf：文档与插图。
+# - `*.h264` / `*.mp4`：示例用的测试码流。
+# - `deps/**/include/pipeline/io/**`：23 个头文件，源码。
+
+# ---- 2026-11-02：official/benchmark 只留脚本＋文档＋我方实测结果，公开评测集本体挡回 ----
+# 判据＝"能按各子目录 readme 里那张『建议数据集』表重新下载的，就不入库"（benchmark/readme.md
+# 逐目录写明了 coco / cityscapes / DUTS-TE / MOT17 / DIOR / lasot / YFCC100M / Set14 / VOC2012 /
+# imagenet / DCS，正本入口还挂在同一页的 gitee 与 ModelZoo Benchmark 徽章上）。
+# 留库里的：各目录的 *.py 与 readme、`benchmark/benchmark/icraft3.*` 那 692 件 xlsx/txt/log（＝我方
+# 逐版本跑出来的精度记录，别处取不到）、`obb/gold_result_dior.json`（＝我方对答案，同理）。
+# 挡回的合计 665.28 MiB / 14,901 件，留库 16.84 MiB / 1,442 件；
+# 算式＝benchmark 整棵 682.13 MiB / 16,343 件（盘上实测枚举，脚本 workenv/tmp/fpai-sync/bench-delta.py）。
+# 需要单件进库时用 `git add -f <路径>` 放行（D-38 那条口径）。
+official/benchmark/**/*.json
+!official/benchmark/**/gold_result*.json
+official/benchmark/panoptic-seg/coco_val/
+official/benchmark/semantic-seg_cityscapes/labels/
+official/benchmark/MAE/DUTS-TE-Mask/
+official/benchmark/MOT/labels/
+official/benchmark/sot_track/labels/
+official/benchmark/pixel_error/points/
+official/benchmark/obb/DOTAv1_val_source_gt_with_preprocess/
+official/benchmark/superglue/yfcc_test_pairs_with_gt_no_rot.txt
+
+# ---- 2026-11-02：FM33G026 RTC DEMO 的 Altium 工程原件挡回（她当次裁定）----
+# 7 件 / 52.03 MiB，全是 PCB 与原理图库二进制（MyPCBLIB.PCBLIB 27.48 MiB、
+# PCB1.PcbDoc 10.37 MiB、两份厂商 PDF 等），正本在厂商下载域 fdwxhb/fdwmy。
+unofficial/fm33g026-rtc-demo/FM33G026 RTC DEMO/
+
+# ---- 2026-11-04：npuserv 的运行期落点挡回（运行时产物类）----
+# server.py 的 --state-dir 默认就在包旁边（lang/npuserv/state/），里面是每次 /load
+# 写的 handshake 与 params JSON、worker 的 stdout 日志、job 记账——跑一次生成一次，
+# 判据＝"重启服务就能重新生成"，入库只会制造 perpetual diff。
+lang/npuserv/state/
+
+# 2026-11-05: 大体积/外部内容不入库（git rm --cached 已停止跟踪，保留本地）
+FPAI30TAI图像FPGA/
+official/
+unofficial/
+
+# ---- 2026-11-05：sdi-psddr / sdi2hdmi 厂商IP源码与编译产物不入库（保留本地，仅我方源码/README/约束/文档入库）----
+sdi-psddr/**/rtl/vendor/
+sdi-psddr/**/*.log
+sdi-psddr/**/*.rpt
+sdi-psddr/**/*.dmp
+sdi-psddr/**/*.html
+sdi2hdmi/rtl/vendor/
+sdi2hdmi/dist/
+sdi2hdmi/out/
+sdi2hdmi/xsim.dir/
+sdi2hdmi/bak-*/
+sdi2hdmi/**/*.log
+sdi2hdmi/**/*.rpt
+*.dll
+*.so
+*.exe
+*.dmp
+# ---- 2026-11-05(修)：sim 只挡仿真运行产物，保留 testbench/脚本 ----
+**/sim/xsim.dir/
+**/sim/*.wdb
+**/sim/*.jou
+**/sim/*.log
+**/sim/webtalk*
+**/sim/xsim.dbg
+**/sim/xsim.mem
+**/sim/*_out.txt
+**/sim/run_full_hp2d.txt
+**/sim/run_gl_hp2d.txt
+# 2026-11-05: 带厂商标记(confidential)的补丁源文件，不入库（保留本地）
+sdi-psddr/FPGA HD-SDI to PS Video Capture Card/src/rx_sdi.y422-patched.v
+
+# 2026-11-06: vendor Confidential sources retained locally, excluded from publication.
+/plnet/rtl_a2_patched/ai7030_edif_top.v
+/plnet/rtl_a2_patched/ps_ai_peripheral.sv

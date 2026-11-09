@@ -1,0 +1,61 @@
+--- /c/Users/takomi/AppData/Local/Temp/opencode/rx_sdi_vendor.v	2026-10-16 00:39:18.877433100 +0800
++++ /c/Users/takomi/AppData/Local/Temp/opencode/rx_sdi_patched.v	2026-10-16 00:39:18.949072900 +0800
+@@ -76,6 +76,7 @@
+     //input              sys_diff_clock_clk_n       ,   //200M
+     //input              sys_diff_clock_clk_p       , 
+     input              sys_clk_200m               ,   
++    input              sys_clk_100m               ,    // cam_clk 未锁定时的兜底时钟（见下）
+     
+     output             led1                       ,
+     output             led2                       ,
+@@ -90,7 +91,18 @@
+     input              rx_gtx_reset_n    ,
+ 
+     // SDI status / measured geometry, already CDC'd into the sys_clk_200m domain
+-    output    [159:0]  sdi_status_bus
++    output    [159:0]  sdi_status_bus,
++
++    // --- added for the sdi-cap project (sdi_cap_top) -------------------------
++    // Raw 8-bit-per-component Y'CbCr 4:2:2 straight out of frame_convertor,
++    // before the YCbCr422_2_RGB888 stage. The capture card wants this, not
++    // RGB888: it is half the bandwidth (2 bytes/px vs 3) and costs no LUTs.
++    // Purely additive -- nothing above is rewired, so the RGB888 path the
++    // vendor demo uses is bit-for-bit unchanged.
++    output     [15:0]  y422_data,        // {img_CbCr, img_Y}
++    output             y422_vs,           // vertical active (frame level)
++    output             y422_hs,           // horizontal active (line level)
++    output             y422_de            // pixel valid = y422_vs & y422_hs
+ 
+ );
+ 
+@@ -344,6 +356,12 @@
+ );
+ assign YCbCr422_data_en = YCbCr422_vsync & YCbCr422_hsync ;
+ 
++// ---- sdi-cap: expose the 4:2:2 stream directly ------------------------------
++assign y422_data = {img_CbCr, img_Y};
++assign y422_vs   = YCbCr422_vsync;
++assign y422_hs   = YCbCr422_hsync;
++assign y422_de   = YCbCr422_data_en;
++
+ YCbCr422_2_RGB888 YCbCr422_2_RGB888_u0(   
+     //CMOS YCbCr422 data input
+     .YCbCr422_vsync  (YCbCr422_vsync      ),   //Prepared Image data vsync valid signal
+@@ -365,7 +383,16 @@
+ );
+ 
+ assign cam_rgb = {img_red,img_green,img_blue};
+-assign cam_clk = rx0_locked ? rx_usrclk : sys_clk_200m;
++    // cam_clk 未锁定时的兜底时钟：100 MHz，不是 200 MHz。
++    //
++    // cam_clk 是纯输出，rx_sdi 内部没有任何地方用它，所以换源完全安全。
++    // 用 200 MHz 时实测时序关不掉 —— 根因是
++    //     PS7 FCLK -> BUFG -> PLLE2 -> BUFG -> 复用 LUT -> BUFG -> FF
++    // 时钟路径本身就 4.239 ns，而周期只有 5 ns（只剩 0.76 ns 给数据）。
++    // 最差数据路径是 8.607 ns，就算优化到零也关不上。
++    // 降到 100 MHz 后周期 10 ns，同一条路径的 slack 从 -3.931 ns 变成正数。
++    // 未锁定时本来就没有有效数据，兜底时钟慢一点没有任何影响。
++    assign cam_clk = rx0_locked ? rx_usrclk : sys_clk_100m;
+ 
+ //==============================================================================
+ // SDI status + measured active geometry.

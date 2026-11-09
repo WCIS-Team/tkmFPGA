@@ -1,0 +1,2 @@
+seq=0 bytes_total=4555 frames=4 frames_in_seg=4 chunks=5 head_bytes=32 fps=30 seg_frames=30 keep=7 dir=/dev/shm/wcis-vpu-vtc-204b41c9a95b4cb28bf849d6bfb721a1 dead=1 pid=8190 unix=1792472494 error=[VPU Exception] in File:D:/yzd/tmp/wcis-camera-preview-vpulive-7f92df53/ps_app/vendor/include/pipeline/vpu/vpu.h  Line:950 
+ Failed to dequeue output buffer, errno=5

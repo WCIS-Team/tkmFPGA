@@ -1,0 +1,32 @@
+=== compile ===
+=== elaborate ===
+=== regs suite (sdi_cap_regs) ===
+
+=================== RESULTS ===================
+
+Suite         Throughput                                                  Check                                                                              
+-----         ----------                                                  -----                                                                              
+B_LAT_1       150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+B_LAT_8       150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+B_LAT_32      150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+B_LAT_64      150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+B_LAT_127     150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+W_LAT_1       150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+W_LAT_2       148.00 MB/s  ( 119.0% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+W_LAT_4       148.00 MB/s  ( 119.0% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+W_LAT_8       100.00 MB/s  (  80.4% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+RING_0        150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+RING_33554432 150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+RING_4096     150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+RING_1000     147.97 MB/s  ( 118.9% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+RING_128      150.91 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+RING_64       148.00 MB/s  ( 119.0% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+RING_16       147.99 MB/s  ( 118.9% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+PX_DUTY_8     18.50 MB/s  (  14.9% of the 124.4 MB/s needed for 1080p30)  data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+PX_MHZ_200    400.00 MB/s  ( 321.5% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+RST_MID       150.90 MB/s  ( 121.3% of the 124.4 MB/s needed for 1080p30) data=PASS marker=PASS frames=PASS axi=PASS ring=PASS drain=PASS quiet=PASS ovf=PASS
+REGS          52 checks                                                   REGS RESULT: PASS                                                                  
+
+
+
+ALL PASS

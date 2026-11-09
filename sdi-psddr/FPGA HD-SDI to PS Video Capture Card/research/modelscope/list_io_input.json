@@ -1,0 +1,72 @@
+[
+ {
+  "CommitMessage": "fix: keep pipeline IO sources out of Git LFS",
+  "CommittedDate": 1784619297,
+  "CommitterName": "chenjiannan",
+  "InCheck": false,
+  "IsLFS": false,
+  "Mode": "33188",
+  "Name": "directory_image_sequence.hpp",
+  "Path": "deps/modelzoo_utils/include/pipeline/io/input/directory_image_sequence.hpp",
+  "Revision": "b4f24efba510d30d25355f122a31b36ffe132d93",
+  "Sha256": "0e134112a2f7f6f0dacdb25521ba9fdf82589f7bfe20437a96c5ac6978835284",
+  "Size": 3104,
+  "Type": "blob"
+ },
+ {
+  "CommitMessage": "fix(webcam): harden startup and frame-rate fallback",
+  "CommittedDate": 1789719602,
+  "CommitterName": "chenjiannan",
+  "InCheck": false,
+  "IsLFS": false,
+  "Mode": "33188",
+  "Name": "h26x_startup.hpp",
+  "Path": "deps/modelzoo_utils/include/pipeline/io/input/h26x_startup.hpp",
+  "Revision": "8dac8b29b7458f8bd458de68fd262ea0f82dcb00",
+  "Sha256": "064c860ef870ad665cd88fac0bf87cbb6ff938b346ea3998bc85f66d0a31ccd2",
+  "Size": 6338,
+  "Type": "blob"
+ },
+ {
+  "CommitMessage": "log details change",
+  "CommittedDate": 1785140373,
+  "CommitterName": "MrNeoBlue",
+  "InCheck": false,
+  "IsLFS": false,
+  "Mode": "33188",
+  "Name": "sdicamera.hpp",
+  "Path": "deps/modelzoo_utils/include/pipeline/io/input/sdicamera.hpp",
+  "Revision": "d899511ccd6c782257ddae1920f40ccf1828f916",
+  "Sha256": "a3e865552f67292deafb72fa79c2947876880844ca5f00485d395c61b5c28cc2",
+  "Size": 13168,
+  "Type": "blob"
+ },
+ {
+  "CommitMessage": "fix(webcam): harden startup and frame-rate fallback",
+  "CommittedDate": 1789719602,
+  "CommitterName": "chenjiannan",
+  "InCheck": false,
+  "IsLFS": false,
+  "Mode": "33188",
+  "Name": "webcam.hpp",
+  "Path": "deps/modelzoo_utils/include/pipeline/io/input/webcam.hpp",
+  "Revision": "8dac8b29b7458f8bd458de68fd262ea0f82dcb00",
+  "Sha256": "fb212e6e108ed068f14a0a3a62b9d5588c4ba3668cb8a6841c028690ac2d44ef",
+  "Size": 16854,
+  "Type": "blob"
+ },
+ {
+  "CommitMessage": "fix(webcam): harden startup and frame-rate fallback",
+  "CommittedDate": 1789719602,
+  "CommitterName": "chenjiannan",
+  "InCheck": false,
+  "IsLFS": false,
+  "Mode": "33188",
+  "Name": "webcam_frame_rate.hpp",
+  "Path": "deps/modelzoo_utils/include/pipeline/io/input/webcam_frame_rate.hpp",
+  "Revision": "8dac8b29b7458f8bd458de68fd262ea0f82dcb00",
+  "Sha256": "feb38d7a8ce1ff95910623c5e4b64e56bda8acb61cc62a82beaa3ed73b7fb8d0",
+  "Size": 2163,
+  "Type": "blob"
+ }
+]

@@ -1,0 +1,12 @@
+#-----------------------------------------------------------
+# Vivado v2018.3.1 (64-bit)
+# SW Build 2489853 on Tue Mar 26 04:20:25 MDT 2019
+# IP Build 2486929 on Tue Mar 26 06:44:21 MDT 2019
+# Start of session at: Thu Oct 15 22:01:46 2026
+# Process ID: 28576
+# Current directory: S:/apps/llm/agentwork/sdi-cap
+# Command line: vivado.exe -mode batch -source build.tcl -log build_impl_hp2.log -journal build_impl_hp2.jou
+# Log file: S:/apps/llm/agentwork/sdi-cap/build_impl_hp2.log
+# Journal file: S:/apps/llm/agentwork/sdi-cap\build_impl_hp2.jou
+#-----------------------------------------------------------
+source build.tcl

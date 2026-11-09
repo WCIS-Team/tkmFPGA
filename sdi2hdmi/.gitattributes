@@ -1,0 +1,6 @@
+# 全库按字节存取，禁止行尾转换。
+# 原因：本工程多处判据是"与校机/正本副本逐字节相同"（如 sim/harness.cpp、
+# sim/tb_e2e.v 的 md5 都要与对方副本对齐），而机上全局 core.autocrlf=input
+# 会在 `git add` 时把 CRLF 洗成 LF，字节当场变化。加 `* -text` 后 blob 与盘上
+# 字节逐件全等（与 WCIS 归档根仓库同一口径，见其 .gitattributes）。
+* -text

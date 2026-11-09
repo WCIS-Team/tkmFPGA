@@ -1,0 +1,1 @@
+seq=0 bytes_total=0 frames=0 frames_in_seg=0 chunks=1 head_bytes=33 fps=30 seg_frames=30 keep=7 dir=/dev/shm/wcis-vpu-vtc-ad73ba3278e7468db61eff4247ad125b dead=1 pid=7343 unix=1792469368 error=VPU output poll failed

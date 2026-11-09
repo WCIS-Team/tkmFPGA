@@ -1,0 +1,19 @@
+BOOT.bin splice - re-run + cross-check for the record
+generated: 2026-10-16 00:39:56 +0800
+
+command:
+  python boot-splice.py sdi_cap_lite_20261015_230629.bit board_BOOT.bin <out> --slot 0x2D9F0 --size 5979868
+
+new bit   S:/apps/llm/agentwork/sdi-cap/dist/sdi_cap_lite_20261015_230629.bit: sync@157, payload 5979868 B
+wrote C:/Users/takomi/AppData/Local/Temp/opencode/boot_reverify.bin: 7023040 B, md5 03AB070C241D17C5BC912EE713CD81E8
+template           : 7023040 B, md5 ACA4612B566738350A8C5EDAC0DB1929
+verify OK: bytes outside 0x2D9F0..0x5E18CC untouched, slot == swapped new payload
+
+--- md5 cross-check (reverified vs delivered) ---
+03ab070c241d17c5bc912ee713cd81e8 */c/Users/takomi/AppData/Local/Temp/opencode/boot_reverify.bin
+03ab070c241d17c5bc912ee713cd81e8 */s/apps/llm/agentwork/BOOT_sdi_cap_20261015_230629.bin
+aca4612b566738350a8c5edac0db1929 */s/apps/llm/agentwork/board_BOOT.bin
+01712db8de9329abb4706781a83afb19 */s/apps/llm/agentwork/sdi-cap/dist/sdi_cap_lite_20261015_230629.bit
+
+--- byte compare delivered vs reverified ---
+identical (byte-for-byte)
